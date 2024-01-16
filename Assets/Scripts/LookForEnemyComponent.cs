@@ -8,6 +8,7 @@ using static UnityEngine.GraphicsBuffer;
 public class LookForEnemyComponent : MonoBehaviour
 {
     public event Action OnEnemyInRange;
+    public event Action OnEnemyNotInRange;
     [SerializeField] bool inRange = false;
     [SerializeField] float detectionRange = 7;
 
@@ -20,14 +21,15 @@ public class LookForEnemyComponent : MonoBehaviour
     void Start()
     {
         eatComponent = GetComponent<EatComponent>();
-        
-        
+
+
+
     }
 
     void Update()
     {
         if (!inRange)
-        { 
+        {
             bool _inRange = CheckDistanceToDetect(GetClosest().position, transform.position);
 
             if (_inRange)
@@ -35,7 +37,13 @@ public class LookForEnemyComponent : MonoBehaviour
                 inRange = _inRange;
                 OnEnemyInRange?.Invoke();
             }
+            else 
+            {
+                OnEnemyNotInRange?.Invoke();
+            }
+
         }
+       
 
     }
     Transform GetClosest()
@@ -43,12 +51,16 @@ public class LookForEnemyComponent : MonoBehaviour
 
         return eatComponent.AllFood.OrderBy(c => Vector3.Distance(c.position, transform.position)).First();   // Lambda to order list () equivalent
     }
-    bool CheckDistanceToDetect(Vector3 _pos, Vector3 _targetPos)
+    public bool CheckDistanceToDetect(Vector3 _pos, Vector3 _targetPos)
     {
         float _distance = Vector3.Distance(_pos, _targetPos);
         Debug.Log($"{_distance}");
         if (_distance <= detectionRange)
             return true;
         return false;
+    }
+    private void OnDrawGizmos()
+    {
+        AnmaGizmos.DrawSphere(transform.position, detectionRange, Color.blue);
     }
 }

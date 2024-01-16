@@ -5,9 +5,9 @@ using UnityEngine;
 public class lookForEnemyBehaviour : FSMABase
 {    override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (!brain.LookingForEnemy.InRange) return;
+        if (!brain) return;
         Debug.Log("Entered LookingForEnemy State");
-        //brain.SetColor(debugColor);
+        brain.SetColor(debugColor);
         //brain.LookingForEnemy.SetTarget();
     }
 
