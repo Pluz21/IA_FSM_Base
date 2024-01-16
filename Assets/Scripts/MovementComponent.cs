@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TreeEditor;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 public class MovementComponent : MonoBehaviour
 {
@@ -11,6 +12,10 @@ public class MovementComponent : MonoBehaviour
     [SerializeField] bool canMove = true;
     [SerializeField] Transform target = null;
     [SerializeField] float minDistance = 0.5f;
+
+
+
+
 
     public bool IsAtLocation
     {
@@ -23,15 +28,16 @@ public class MovementComponent : MonoBehaviour
     }
     void Start()
     {
-        
     }
 
     void Update()
     {
+
         MoveTo();
         RotateTo();
     }
 
+   
     public void SetTarget(Transform _target)
     { 
         target = _target;

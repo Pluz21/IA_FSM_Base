@@ -11,8 +11,14 @@ public class EatComponent : MonoBehaviour
     [SerializeField] Transform target = null;
     [SerializeField] bool notCollected = false;
 
+       public bool IsValid => allFood.Count > 0;
+   
+    public List<Transform> AllFood
+    {
+        get { return allFood; }
+        set { allFood = value; }
+    }
 
-    public bool IsValid => allFood.Count > 0;
     public bool NotCollected => notCollected;
     void Start()
     {
@@ -27,13 +33,13 @@ public class EatComponent : MonoBehaviour
 
     Transform GetClosest()
     { 
-        if(!IsValid)return null;
+        if(!IsValid )return null;
         Debug.Log("Closest grabbed");
-        return allFood.OrderBy(c => Vector3.Distance(c.position,transform.position)).First();   // Lambda to order list () equivalent
-                                                                                                // c is Transform type. Compare Distance from all transforms 
-
-
+     
+            return allFood.OrderBy(c => Vector3.Distance(c.position,transform.position)).First();   // Lambda to order list () equivalent
     }
+
+  
     public void Eat()
     {
         allFood.Remove(target);
@@ -43,10 +49,11 @@ public class EatComponent : MonoBehaviour
 
     public void Select()
     {
-        if (target || !IsValid) return;
-        target = GetClosest();
-        Debug.Log("Selected");
-        notCollected = true;
+        if (target || !IsValid ) return;
+       
+            target = GetClosest();
+            Debug.Log("Selected");
+            notCollected = true;
         OnSelect?.Invoke(target);
     }
 }
