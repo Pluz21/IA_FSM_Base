@@ -403,7 +403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetLocation: {x: 0, y: 0, z: 0}
-  range: 5
+  range: 19.03
 --- !u!114 &1422310113
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,8 +416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fddb94d080089064da826cd5a29bdd9d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeMin: 0
-  timeMax: 3
+  timeMin: 0.5
+  timeMax: 0.7
   waitingTime: 0
   currentTime: 0
 --- !u!114 &1422310114
@@ -518,7 +518,7 @@ Transform:
   m_GameObject: {fileID: 1422310108}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.206512, y: 22.936035, z: 1.87}
+  m_LocalPosition: {x: 10.34, y: 0, z: 27.66}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
