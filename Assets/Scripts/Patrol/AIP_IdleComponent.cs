@@ -34,13 +34,13 @@ public class AIP_IdleComponent : MonoBehaviour
         return _time;
     }
 
-    public void GetTime()
+    public void GetRandomWaitingTime()
     { 
         waitingTime = UnityEngine.Random.Range(timeMin, timeMax);
     }
     void Update()
     {
         if(start)
-            UpdateTime(currentTime,waitingTime);   
+           currentTime = UpdateTime(currentTime,waitingTime);   
     }
 }

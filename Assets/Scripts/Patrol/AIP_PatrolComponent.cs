@@ -22,6 +22,7 @@ public class AIP_PatrolComponent : MonoBehaviour
 
     public void FindRandomLocationInRange()
     {
+        Debug.Log("find randomn loc");
         Vector2 _pos = UnityEngine.Random.insideUnitCircle * 2;
         targetLocation = transform.position + new Vector3(_pos.x, 0, _pos.y) * range;
         OnRandomLocationFound?.Invoke(targetLocation);

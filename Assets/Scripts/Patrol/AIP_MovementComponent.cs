@@ -63,6 +63,7 @@ public class AIP_MovementComponent : MonoBehaviour
         enemyTransform = _target;
         canMove = enemyTransform != null;   // if target, can move;
         useTarget = true;
+        canMove = true;
     }
 
     public void SetPatrolLocation(Vector3 _pos)
@@ -71,7 +72,14 @@ public class AIP_MovementComponent : MonoBehaviour
     }
 
     void ResetUseTarget()
-    { 
+    {
+        enemyTransform = null;
         useTarget = false;
+        canMove = false;
+    }
+
+    public void SetCanMove(bool _value)
+    { 
+        canMove = _value;
     }
 }

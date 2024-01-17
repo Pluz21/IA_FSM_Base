@@ -48,7 +48,7 @@ public class AIP_Brain : MonoBehaviour
         {
             fsm.SetBool(IDLE_DONE, true);  
             fsm.SetBool(PATROL_DONE, false);     // We set the patrol bool of our animator here to false, just to make sure everytime our 
-            patrol.FindRandomLocationInRange();                                     // animator is in the IDLE state, it also resets the patrol done bool
+                                                // animator is in the IDLE state, it also resets the patrol done bool
         };
         patrol.OnRandomLocationFound += (t) =>          // While in state patrol, finds a random location
                                                         // thenwe set the location for the ai to move to
@@ -57,10 +57,10 @@ public class AIP_Brain : MonoBehaviour
         };
         movement.OnTargetReached += () =>
         {
-            //patrol.FindRandomLocationInRange();
-            // Temp
             fsm.SetBool(IDLE_DONE, false);
             fsm.SetBool(PATROL_DONE, true);
+            //patrol.FindRandomLocationInRange();
+            // Temp
             // Temp
         };
         behaviours = fsm.GetBehaviours<AIP_FSMABase>();      //Returns all StateMachineBehaviour that
@@ -81,6 +81,6 @@ public class AIP_Brain : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        AnmaGizmos.DrawSphere(transform.position + (transform.up * 1.5f), 0.5f, debugColor);
+        AnmaGizmos.DrawSphere(transform.position + (transform.up * 1.5f), 0.5f, debugColor,AnmaGizmos.DrawMode.Full);
     }
 }
