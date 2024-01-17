@@ -12,6 +12,7 @@ public class EatComponent : MonoBehaviour
     [SerializeField] bool notCollected = false;
 
 
+    public List<Transform> AllFood => allFood;
     public bool IsValid => allFood.Count > 0;
     public bool NotCollected => notCollected;
     void Start()
