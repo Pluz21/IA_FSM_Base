@@ -1,18 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class AIP_IdleComponent : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public event Action OnElapsed;
+    [SerializeField] float timeMin = 0, timeMax = 3, waitingTime = 0,currentTime = 0;
+    bool start = false;
     void Start()
     {
-        
+        OnElapsed += ResetTime;
     }
 
-    // Update is called once per frame
+    private void ResetTime()
+    {
+        start = false;
+        currentTime = 0;
+    }
+    public void StartTime()
+    { 
+        start = true;
+
+    }
+    float UpdateTime(float _time, float _timeMax)
+    {
+        _time += Time.deltaTime;
+        if (_time >= _timeMax)
+        {
+            OnElapsed?.Invoke();
+            return 0;
+        }
+        return _time;
+    }
+
+    public void GetTime()
+    { 
+        waitingTime = UnityEngine.Random.Range(timeMin, timeMax);
+    }
     void Update()
     {
-        
+        if(start)
+            UpdateTime(currentTime,waitingTime);   
     }
 }

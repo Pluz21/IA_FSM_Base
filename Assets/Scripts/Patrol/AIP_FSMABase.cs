@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIP_FSMABase : MonoBehaviour
+public class AIP_FSMABase : StateMachineBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] AIP_Brain brain = null;
+    [SerializeField] Color debugColor = Color.black;    // if fsm wowrks, white. Otherwise black; 
+  
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    public void Init(AIP_Brain _brain)   // We make it public so that each behaviour can get a reference to the brain                         
+    { 
+        brain = _brain;
     }
 }
