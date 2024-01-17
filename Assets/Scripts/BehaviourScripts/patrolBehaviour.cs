@@ -10,6 +10,7 @@ public class patrolBehaviour : FSMABase
         Debug.Log($"Start");
         //debugColor = Color.blue;
         brain.SetColor(debugColor);
+        brain.Patrolling.FindRandomPoint();
 
     }
 
