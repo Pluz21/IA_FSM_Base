@@ -8,6 +8,7 @@ public class AIP_Brain : MonoBehaviour
 {
     public static readonly int IDLE_DONE = Animator.StringToHash("idleDone");
     public static readonly int PATROL_DONE = Animator.StringToHash("patrolDone");
+    public static readonly int ATTACK_DONE = Animator.StringToHash("attackDone");
     [SerializeField] Animator fsm = null;
     [SerializeField] AIP_IdleComponent idle = null;
     [SerializeField] AIP_PatrolComponent patrol = null;
@@ -49,6 +50,16 @@ public class AIP_Brain : MonoBehaviour
             fsm.SetBool(IDLE_DONE, true);  
             fsm.SetBool(PATROL_DONE, false);     // We set the patrol bool of our animator here to false, just to make sure everytime our 
                                                 // animator is in the IDLE state, it also resets the patrol done bool
+        };
+        attack.OnIsInRange += (b) =>
+        { 
+           attack.CanAttack = b;
+            //fsm.SetBool(ATTACK_DONE, true);
+        };
+        attack.OnEnemyIsTooClose += (b) => 
+        {
+           // if(attack.EnemyIsTooClose)
+           //attack.CanAttack = !b;
         };
         patrol.OnRandomLocationFound += (t) =>          // While in state patrol, finds a random location
                                                         // thenwe set the location for the ai to move to

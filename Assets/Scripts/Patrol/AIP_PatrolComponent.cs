@@ -30,8 +30,8 @@ public class AIP_PatrolComponent : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        AnmaGizmos.DrawSphere(transform.position, range, Color.blue);
-        AnmaGizmos.DrawSphere(targetLocation, 0.5f, Color.red);
+        ///AnmaGizmos.DrawSphere(transform.position, range, Color.blue);
+       // AnmaGizmos.DrawSphere(targetLocation, 0.5f, Color.red);
     }
 
 }

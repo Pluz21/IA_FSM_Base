@@ -16,7 +16,6 @@ public class AIP_IdleBehaviour : AIP_FSMABase
    
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log("idleupdate");
 
     }
 
