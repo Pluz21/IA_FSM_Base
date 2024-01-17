@@ -6,6 +6,8 @@ using UnityEngine;
 [RequireComponent(typeof(AIP_MovementComponent),typeof(Animator))]
 public class AIP_Brain : MonoBehaviour
 {
+    public static readonly int IDLE_DONE = Animator.StringToHash("idleDone");
+    public static readonly int PATROL_DONE = Animator.StringToHash("patrolDone");
     [SerializeField] Animator fsm = null;
     [SerializeField] AIP_IdleComponent idle = null;
     [SerializeField] AIP_PatrolComponent patrol = null;
@@ -41,13 +43,33 @@ public class AIP_Brain : MonoBehaviour
         patrol = GetComponent<AIP_PatrolComponent>();
 
         if (!IsValid) return;     // We do a check here because we want to subscribe events once they are valid. 
+
+        idle.OnElapsed += () =>                                 // We go to STATE PATROL and call patrol function
+        {
+            fsm.SetBool(IDLE_DONE, true);  
+            fsm.SetBool(PATROL_DONE, false);     // We set the patrol bool of our animator here to false, just to make sure everytime our 
+            patrol.FindRandomLocationInRange();                                     // animator is in the IDLE state, it also resets the patrol done bool
+        };
+        patrol.OnRandomLocationFound += (t) =>          // While in state patrol, finds a random location
+                                                        // thenwe set the location for the ai to move to
+        {
+            movement.SetPatrolLocation(t);              
+        };
+        movement.OnTargetReached += () =>
+        {
+            //patrol.FindRandomLocationInRange();
+            // Temp
+            fsm.SetBool(IDLE_DONE, false);
+            fsm.SetBool(PATROL_DONE, true);
+            // Temp
+        };
         behaviours = fsm.GetBehaviours<AIP_FSMABase>();      //Returns all StateMachineBehaviour that
                                                             //match type T or are derived from T. Returns null if none are found.
         int _size = behaviours.Length;
         for (int i = 0; i < _size; i++)
         {
             behaviours[i].Init(this);       // no check needed since we already call GetBehaviours earlier. 
-                                           // 
+                                            
                                            
         }
     }

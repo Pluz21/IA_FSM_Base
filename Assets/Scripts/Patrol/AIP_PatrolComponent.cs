@@ -6,7 +6,7 @@ using UnityEngine;
 public class AIP_PatrolComponent : MonoBehaviour
 {
     // this component will look for a point. 
-    public event Action<Vector3> OnTargetLocationFound = null;   // MovementComponent will use the Vector3 from this event or the brain. 
+    public event Action<Vector3> OnRandomLocationFound = null;   // MovementComponent will use the Vector3 from this event or the brain. 
     [SerializeField] Vector3 targetLocation = Vector3.zero;
     [SerializeField] float range = 20;
 
@@ -24,7 +24,7 @@ public class AIP_PatrolComponent : MonoBehaviour
     {
         Vector2 _pos = UnityEngine.Random.insideUnitCircle * 2;
         targetLocation = transform.position + new Vector3(_pos.x, 0, _pos.y) * range;
-        OnTargetLocationFound?.Invoke(targetLocation);
+        OnRandomLocationFound?.Invoke(targetLocation);
     }
 
     private void OnDrawGizmos()

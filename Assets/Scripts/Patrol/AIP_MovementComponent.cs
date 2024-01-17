@@ -32,17 +32,42 @@ public class AIP_MovementComponent : MonoBehaviour
     {
         
     }
-
     void Update()
     {
-        
+        MoveTo();
+        RotateTo();
     }
+
+    void RotateTo()
+    {
+        if (!canMove) return;
+        Vector3 _otherPos = (useTarget && enemyTransform) ? enemyTransform.position : patrolLocation;
+        Vector3 _look = _otherPos - transform.position;
+        if (_look == Vector3.zero) return;
+        Quaternion _rot = Quaternion.LookRotation(_look);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, _rot, Time.deltaTime * rotationSpeed);
+    }
+
+    void MoveTo()
+    {
+        if (!canMove) return;
+        Vector3 _otherPos = (useTarget && enemyTransform) ? enemyTransform.position : patrolLocation;
+        transform.position = Vector3.MoveTowards(transform.position, _otherPos, Time.deltaTime * moveSpeed);
+        if(IsAtLocation)
+            OnTargetReached?.Invoke();
+    }
+
 
     public void SetTarget(Transform _target)
     { 
         enemyTransform = _target;
         canMove = enemyTransform != null;   // if target, can move;
         useTarget = true;
+    }
+
+    public void SetPatrolLocation(Vector3 _pos)
+    { 
+        patrolLocation = _pos;
     }
 
     void ResetUseTarget()
