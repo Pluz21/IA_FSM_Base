@@ -59,7 +59,6 @@ public class AIP_Brain : MonoBehaviour
         {
             fsm.SetBool(IDLE_DONE, false);
             fsm.SetBool(PATROL_DONE, true);
-            //patrol.FindRandomLocationInRange();
             // Temp
             // Temp
         };

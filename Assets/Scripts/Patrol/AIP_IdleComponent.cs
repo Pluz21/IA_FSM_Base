@@ -6,7 +6,7 @@ using System;
 public class AIP_IdleComponent : MonoBehaviour
 {
     public event Action OnElapsed;
-    [SerializeField] float timeMin = 0, timeMax = 3, waitingTime = 0,currentTime = 0;
+    [SerializeField] float timeMin = 0.5f, timeMax = 3, waitingTime = 0,currentTime = 0;
     bool start = false;
     void Start()
     {
