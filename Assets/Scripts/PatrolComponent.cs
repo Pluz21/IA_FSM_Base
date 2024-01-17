@@ -16,6 +16,8 @@ public class PatrolComponent : MonoBehaviour
     [SerializeField] float patrolSpeed = 10;
     [SerializeField] float rotationSpeed = 50;
     [SerializeField] float minDistance = 0.5f;
+    [SerializeField] float minRandFloat = 0.5f;
+    [SerializeField] float maxRandFloat = 5f;
     private bool canFindRandomPoint;
 
 
@@ -61,9 +63,9 @@ public class PatrolComponent : MonoBehaviour
     public void FindRandomPoint()
     {
        
-        float _randX = UnityEngine.Random.Range(0.6f, 3);
-        float _randY = UnityEngine.Random.Range(0.6f, 3);
-        float _randZ = UnityEngine.Random.Range(0.6f, 3);
+        float _randX = UnityEngine.Random.Range(minRandFloat, maxRandFloat);
+        float _randY = UnityEngine.Random.Range(minRandFloat, maxRandFloat);
+        float _randZ = UnityEngine.Random.Range(minRandFloat, maxRandFloat);
         Vector3 _pos = new Vector3(transform.position.x + _randX, transform.position.y + _randY, transform.position.z + _randZ);
         target = _pos;
         OnRandomPointSet?.Invoke();

@@ -858,6 +858,8 @@ MonoBehaviour:
   patrolSpeed: 10
   rotationSpeed: 50
   minDistance: 0.5
+  minRandFloat: -2
+  maxRandFloat: 5
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

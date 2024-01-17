@@ -36,10 +36,12 @@ public class LookForEnemyComponent : MonoBehaviour
             {
                 inRange = _inRange;
                 OnEnemyInRange?.Invoke();
+                Debug.Log("Enemy in Range!");
             }
             else 
             {
                 OnEnemyNotInRange?.Invoke();
+                Debug.Log("Enemy Not in Range!");
             }
 
         }
