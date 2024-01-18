@@ -17,6 +17,7 @@ public class AIP_Brain : MonoBehaviour
     [SerializeField] AIP_AttackComponent attack = null;
     [SerializeField] AIP_MovementComponent movement = null;
     [SerializeField] AIP_DetectionComponent detection = null;
+    
     Color debugColor = Color.white;
 
     AIP_FSMABase[] behaviours = new AIP_FSMABase[0];
@@ -68,7 +69,24 @@ public class AIP_Brain : MonoBehaviour
             // Temp
             // Temp
         };
-
+        attack.OnIsInRange += (b) =>                        // This event is called in update.
+        {
+            if (!b)
+            {
+                fsm.SetBool(ATTACK_DONE, true);
+                fsm.SetBool(CHASE_DONE, false);
+                return;
+            }
+            fsm.SetBool(ATTACK_DONE, false);
+            fsm.SetBool(CHASE_DONE, true);
+            movement.SetCanMove(false);
+        };
+        attack.OnTargetDestroyed += (g) =>
+        {
+            fsm.SetBool(ATTACK_DONE, true);
+            fsm.SetBool(IDLE_DONE, false);
+            detection.RemoveEntity(g);
+        };
         detection.OnEntityDetected += (e) =>
         {
             Debug.Log("OnDetected");
@@ -77,10 +95,12 @@ public class AIP_Brain : MonoBehaviour
                 fsm.SetBool(PATROL_DONE, false);
                 fsm.SetBool(CHASE_DONE, true);
                 movement.SetTarget(null);
+                attack.SetTarget(null);
                 return;
             }
             fsm.SetBool(PATROL_DONE, true);
             fsm.SetBool(CHASE_DONE,false);
+            attack.SetTarget(e.transform);
             movement.SetTarget(e.transform);
         };
         behaviours = fsm.GetBehaviours<AIP_FSMABase>();      //Returns all StateMachineBehaviour that

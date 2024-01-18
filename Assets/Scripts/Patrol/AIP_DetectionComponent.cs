@@ -53,6 +53,12 @@ public class AIP_DetectionComponent : MonoBehaviour
 
     }
 
+    public void RemoveEntity(GameObject _gameObject)
+    {
+        if (!allEntities.Contains(_gameObject)) return;
+        allEntities.Remove(_gameObject);
+    }
+
     private void OnDrawGizmos()
     {
         AnmaGizmos.DrawSphere(transform.position, detectionRange, TVL_Colors.Colors.Chartreuse);

@@ -2,23 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AIP_ChaseBehaviour : AIP_FSMABase
+public class AIP_AttackBehaviour : AIP_FSMABase
 {
- 
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         brain.SetColor(debugColor);
     }
 
-
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        brain.Detection.Detect();
         brain.Attack.CheckIsInRange();
+        brain.Attack.Attack();
     }
 
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        //brain.Movement.SetCanMove(false);
 
     }
 
