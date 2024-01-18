@@ -59,11 +59,12 @@ public class AIP_MovementComponent : MonoBehaviour
 
 
     public void SetTarget(Transform _target)
-    { 
+    {
+        Debug.Log($"SetTarget called, target is {_target}");
         enemyTransform = _target;
-        canMove = enemyTransform != null;   // if target, can move;
-        useTarget = true;
-        canMove = true;
+        canMove = _target != null;   // if target, can move;
+        useTarget = _target != null;
+        canMove = true; //removed. might need to reset 
     }
 
     public void SetPatrolLocation(Vector3 _pos)

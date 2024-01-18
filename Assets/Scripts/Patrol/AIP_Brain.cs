@@ -1,18 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
 
 [RequireComponent(typeof(AIP_AttackComponent),typeof(AIP_IdleComponent),typeof(AIP_PatrolComponent))]
-[RequireComponent(typeof(AIP_MovementComponent),typeof(Animator))]
+[RequireComponent(typeof(AIP_MovementComponent),typeof(Animator),typeof(AIP_DetectionComponent))]
 public class AIP_Brain : MonoBehaviour
 {
     public static readonly int IDLE_DONE = Animator.StringToHash("idleDone");
     public static readonly int PATROL_DONE = Animator.StringToHash("patrolDone");
+    public static readonly int CHASE_DONE = Animator.StringToHash("chaseDone");
+    public static readonly int ATTACK_DONE = Animator.StringToHash("attackDone");
     [SerializeField] Animator fsm = null;
     [SerializeField] AIP_IdleComponent idle = null;
     [SerializeField] AIP_PatrolComponent patrol = null;
     [SerializeField] AIP_AttackComponent attack = null;
     [SerializeField] AIP_MovementComponent movement = null;
+    [SerializeField] AIP_DetectionComponent detection = null;
     Color debugColor = Color.white;
 
     AIP_FSMABase[] behaviours = new AIP_FSMABase[0];
@@ -22,6 +26,7 @@ public class AIP_Brain : MonoBehaviour
     public AIP_PatrolComponent Patrol => patrol;
     public AIP_AttackComponent Attack => attack;
     public AIP_MovementComponent Movement => movement;
+    public AIP_DetectionComponent Detection => detection;
 
     public bool IsValid => fsm && idle && patrol && movement && attack; // We want all 
     void Start()
@@ -41,6 +46,7 @@ public class AIP_Brain : MonoBehaviour
         attack = GetComponent<AIP_AttackComponent>();
         movement = GetComponent<AIP_MovementComponent>();
         patrol = GetComponent<AIP_PatrolComponent>();
+        detection = GetComponent<AIP_DetectionComponent>();
 
         if (!IsValid) return;     // We do a check here because we want to subscribe events once they are valid. 
 
@@ -61,6 +67,21 @@ public class AIP_Brain : MonoBehaviour
             fsm.SetBool(PATROL_DONE, true);
             // Temp
             // Temp
+        };
+
+        detection.OnEntityDetected += (e) =>
+        {
+            Debug.Log("OnDetected");
+            if (!e)
+            {
+                fsm.SetBool(PATROL_DONE, false);
+                fsm.SetBool(CHASE_DONE, true);
+                movement.SetTarget(null);
+                return;
+            }
+            fsm.SetBool(PATROL_DONE, true);
+            fsm.SetBool(CHASE_DONE,false);
+            movement.SetTarget(e.transform);
         };
         behaviours = fsm.GetBehaviours<AIP_FSMABase>();      //Returns all StateMachineBehaviour that
                                                             //match type T or are derived from T. Returns null if none are found.

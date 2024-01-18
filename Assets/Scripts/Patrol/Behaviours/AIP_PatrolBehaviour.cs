@@ -18,6 +18,7 @@ public class AIP_PatrolBehaviour : AIP_FSMABase
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Debug.Log("patrol update");
+        brain.Detection.Detect();
 
     }
 
