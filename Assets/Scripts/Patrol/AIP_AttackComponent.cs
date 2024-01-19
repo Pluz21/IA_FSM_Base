@@ -10,14 +10,14 @@ public class AIP_AttackComponent : MonoBehaviour
     [SerializeField] Transform enemyTransform = null;
     [SerializeField] float currentTime = 0, maxTime = 1;
     [SerializeField] float damage = 1;
-    [SerializeField] float range = 1;
+    [SerializeField] float attackRange = 1;
     [SerializeField] bool canAttack = true;
 
     public bool IsInRange
     { get
         {
             if (!enemyTransform) return false;    // this our target
-            if (Vector3.Distance(enemyTransform.position, transform.position) <= range)
+            if (Vector3.Distance(enemyTransform.position, transform.position) <= attackRange)
             {
                 OnIsInRange?.Invoke(true);
                 return true;
@@ -43,7 +43,7 @@ public class AIP_AttackComponent : MonoBehaviour
     public bool CheckIsInRange()
     {
         if (!enemyTransform) return false;    // this our target
-        if (Vector3.Distance(enemyTransform.position, transform.position) <= range)
+        if (Vector3.Distance(enemyTransform.position, transform.position) <= attackRange)
         {
             OnIsInRange?.Invoke(true);
             return true;

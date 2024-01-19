@@ -8,6 +8,7 @@ public class AIP_ChaseBehaviour : AIP_FSMABase
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         brain.SetColor(debugColor);
+        brain.Movement.SetCanMove(true);
     }
 
 

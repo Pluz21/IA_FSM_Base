@@ -94,8 +94,12 @@ public class AIP_Brain : MonoBehaviour
             {
                 fsm.SetBool(PATROL_DONE, false);
                 fsm.SetBool(CHASE_DONE, true);
-                movement.SetTarget(null);
                 attack.SetTarget(null);
+                movement.SetTarget(null);
+                if (fsm.GetBool(IDLE_DONE))
+                { 
+                    movement.SetCanMove(true);
+                }
                 return;
             }
             fsm.SetBool(PATROL_DONE, true);
