@@ -1,33 +1,37 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class idleBehaviour : FSMABase
+public class NM_ChaseBehaviour : NM_FSMA
 {
-   // [SerializeField] bool wasCalled = false;
-
-    // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
+    [SerializeField] float current = 0;
+    [SerializeField] float max= 0.5f;
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log($"Start");
-        //debugColor = Color.blue;
         brain.SetColor(debugColor);
-        brain.Idling.GetTime();
-        brain.Idling.StartTime();
-        //wasCalled = true;
+        brain.Agent.SetDestination(brain.Navigation.Target.position);
+        brain.Agent.enabled = true;
     }
 
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log($"Update");
-
+        if(!brain.Agent.enabled)
+            UpdateTime(ref current, max);
     }
 
-    // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
+    private void UpdateTime(ref float _current, float _max)
+    {
+        _current += Time.deltaTime;
+        if(_current >= _max)
+        {
+            _current = 0;
+            brain.Agent.SetDestination(brain.Navigation.Target.position);
+        }
+    }
+
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Debug.Log($"Exit");
 
     }
 

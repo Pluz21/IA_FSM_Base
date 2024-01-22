@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class NM_FSMA : StateMachineBehaviour
 {
-    [SerializeField] protected NM_Brain brain = null;
+    [SerializeField] public NM_Brain brain = null;
     [SerializeField] protected Color debugColor = Color.black;
 
     public Color DebugColor => debugColor;
@@ -12,6 +13,9 @@ public class NM_FSMA : StateMachineBehaviour
     {
         brain = _brain;
     }
+    
+    
+    
     //public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) // here we can check 
     // everything that is inside the AnimatorStateInfo, and use it to create our own behaviours.
     //{
