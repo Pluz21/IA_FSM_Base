@@ -17,6 +17,7 @@ public class AIP_Brain : MonoBehaviour
     [SerializeField] AIP_AttackComponent attack = null;
     [SerializeField] AIP_MovementComponent movement = null;
     [SerializeField] AIP_DetectionComponent detection = null;
+    [SerializeField] Navigation navigation= null;
     
     Color debugColor = Color.white;
 
@@ -28,6 +29,7 @@ public class AIP_Brain : MonoBehaviour
     public AIP_AttackComponent Attack => attack;
     public AIP_MovementComponent Movement => movement;
     public AIP_DetectionComponent Detection => detection;
+    public Navigation Navigation => navigation;
 
     public bool IsValid => fsm && idle && patrol && movement && attack; // We want all 
     void Start()
@@ -48,6 +50,7 @@ public class AIP_Brain : MonoBehaviour
         movement = GetComponent<AIP_MovementComponent>();
         patrol = GetComponent<AIP_PatrolComponent>();
         detection = GetComponent<AIP_DetectionComponent>();
+        navigation = GetComponent<Navigation>();
 
         if (!IsValid) return;     // We do a check here because we want to subscribe events once they are valid. 
 
@@ -55,8 +58,18 @@ public class AIP_Brain : MonoBehaviour
         {
             fsm.SetBool(IDLE_DONE, true);  
             fsm.SetBool(PATROL_DONE, false);     // We set the patrol bool of our animator here to false, just to make sure everytime our 
-                                                // animator is in the IDLE state, it also resets the patrol done bool
+            navigation.CanStartNav = true;
+            navigation.InitPath();                                  // animator is in the IDLE state, it also resets the patrol done bool
         };
+
+        navigation.OnFinishedCollision += () =>
+        {
+            fsm.SetBool(CHASE_DONE, true);
+            fsm.SetBool(IDLE_DONE, false);
+            navigation.CanStartNav = false;
+        };
+
+
         patrol.OnRandomLocationFound += (t) =>          // While in state patrol, finds a random location
                                                         // thenwe set the location for the ai to move to
         {
