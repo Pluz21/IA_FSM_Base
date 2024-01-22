@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class NM_Brain : MonoBehaviour
@@ -10,7 +9,7 @@ public class NM_Brain : MonoBehaviour
     [SerializeField] NM_Idle idle = null;
     [SerializeField] NM_Navigation navigation = null;
     Color debugColor = Color.white;
-    Behaviour[] behaviours = new Behaviour[0];
+    NM_FSMA[] behaviours = new NM_FSMA[0];
 
     public Animator FSM => fsm;
     public NM_Idle Idle => idle;
@@ -31,6 +30,19 @@ public class NM_Brain : MonoBehaviour
         idle = GetComponent<NM_Idle>();
         navigation = GetComponent<NM_Navigation>();
         if (!IsValid) return;
+
+
+        idle.OnElapsed += () =>
+        {
+
+        };
+
+        //behaviours = fsm.GetBehaviours<NM_FSMA>();
+        int _size = behaviours.Length;
+        for (int i = 0; i < _size; i++)
+        {
+            behaviours[i].Init(this);
+        }
     }
 
     void Update()

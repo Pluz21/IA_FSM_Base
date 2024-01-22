@@ -1,18 +1,46 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class NM_Idle : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public event Action OnElapsed = null;
+    [SerializeField] float timeMin = 0.5f, timeMax = 3, waitingTime = 0, currentTime = 0;
+    bool start = false;
     void Start()
     {
-        
+        OnElapsed += ResetTime;
     }
 
-    // Update is called once per frame
+    private void ResetTime()
+    {
+        start = false;
+        currentTime = 0;
+    }
+    public void StartTime()
+    {
+        start = true;
+
+    }
+    float UpdateTime(float _time, float _timeMax)
+    {
+        _time += Time.deltaTime;
+        if (_time >= _timeMax)
+        {
+            OnElapsed?.Invoke();
+            return 0;
+        }
+        return _time;
+    }
+
+    public void GetRandomWaitingTime()
+    {
+        waitingTime = UnityEngine.Random.Range(timeMin, timeMax);
+    }
     void Update()
     {
-        
+        if (start)
+            currentTime = UpdateTime(currentTime, waitingTime);
     }
 }

@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NM_FSMA : MonoBehaviour
+public class NM_FSMA : StateMachineBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] protected NM_Brain brain = null;
+    [SerializeField] protected Color debugColor = Color.black;
 
-    // Update is called once per frame
-    void Update()
+    public Color DebugColor => debugColor;
+    public void Init(NM_Brain _brain)
     {
-        
+        brain = _brain;
     }
+    //public override void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex) // here we can check 
+    // everything that is inside the AnimatorStateInfo, and use it to create our own behaviours.
+    //{
+        
+    //}
 }
