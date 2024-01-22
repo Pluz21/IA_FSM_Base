@@ -56,6 +56,10 @@ public class Navigation : MonoBehaviour
 
     }
 
+    public void SetCanStartNav(bool _value)
+    { 
+        canStartNav = _value;
+    }
 
     void Update()
     {

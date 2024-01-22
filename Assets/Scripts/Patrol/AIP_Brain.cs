@@ -58,7 +58,7 @@ public class AIP_Brain : MonoBehaviour
         {
             fsm.SetBool(IDLE_DONE, true);  
             fsm.SetBool(PATROL_DONE, false);     // We set the patrol bool of our animator here to false, just to make sure everytime our 
-            navigation.CanStartNav = true;
+            navigation.SetCanStartNav(true);  
             navigation.InitPath();                                  // animator is in the IDLE state, it also resets the patrol done bool
         };
 
@@ -66,7 +66,8 @@ public class AIP_Brain : MonoBehaviour
         {
             fsm.SetBool(CHASE_DONE, true);
             fsm.SetBool(IDLE_DONE, false);
-            navigation.CanStartNav = false;
+            navigation.SetCanStartNav(false); 
+//            navigation.CanStartNav = false;
         };
 
 
